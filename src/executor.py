@@ -60,8 +60,8 @@ class Executor:
     def _lessons(self) -> None:
         """Prints the lessons schedule."""
         days = iter(
-            ("Понедельник", "\nВторник", "\nСреда",
-             "\nЧетверг", "\nПятница", "\nСуббота")
+            ("Понедельник:", "\nВторник:", "\nСреда:",
+             "\nЧетверг:", "\nПятница:", "\nСуббота:")
         )
 
         for day_info in self._config["lessons"].values():
