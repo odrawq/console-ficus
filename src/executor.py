@@ -11,18 +11,28 @@ class Executor:
 
     def __init__(self, config: dict) -> None:
         self._config = config
+        self._commands = {
+            "exit": self._exit,
+            "clear": self._clear,
+            "help": self._help,
+            "week": self._week,
+            "lessons": self._lessons,
+            "calls": self._calls,
+            "time": self._time
+        }
 
     def exec(self, commands: str) -> None:
         """Executes commands."""
-        try:
-            for command in commands.split("&&"):
-                command = command.strip().split(" ")[0]
+        for command in commands.split("&&"):
+            command = command.strip()
 
-                if command:
-                    eval(f"self._{command}()")
+            if command:
+                if command in self._commands:
+                    self._commands[command]()
 
-        except (AttributeError, SyntaxError):
-            print(f"{command}: команда не найдена")
+                else:
+                    print(f"{command}: команда не найдена")
+                    break
 
     def _exit(self) -> None:
         """Exits the application."""
