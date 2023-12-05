@@ -18,10 +18,9 @@ def main() -> None:
         return
 
     executor = Executor(config)
-    print(config["start_message"])
 
     while True:
-        executor.exec(input(config["input_prompt"]))
+        executor.exec(input(">>> "))
 
 
 if __name__ == "__main__":

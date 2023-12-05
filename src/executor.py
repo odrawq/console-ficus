@@ -20,6 +20,10 @@ class Executor:
             "bells": self._bells,
             "time": self._time
         }
+        print(
+            "Console Ficus\n"
+            "Напишите \"help\" для получения дополнительной информации."
+        )
 
     def exec(self, commands: str) -> None:
         """Executes commands."""
