@@ -14,7 +14,7 @@ def main() -> None:
             config = load(file)
 
     except FileNotFoundError:
-        print("Запуск невозможен: не найден файл конфигурации")
+        print("Фатальная ошибка: не найден файл конфигурации")
         return
 
     executor = Executor(config)
