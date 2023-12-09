@@ -118,10 +118,6 @@ class Executor:
                     hours=int(bell_info["1"][:2]),
                     minutes=int(bell_info["1"][3:5])
                 )
-                bell_end_td = datetime.timedelta(
-                    hours=int(bell_info["2"][6:8]),
-                    minutes=int(bell_info["2"][9:])
-                )
 
                 if current_td < bell_start_td:  # Non lessons time.
                     print(
@@ -130,45 +126,49 @@ class Executor:
                     )
                     return
 
-                for bell_half_num, bell_half_info in bell_info.items():
-                    bell_half_start_td = datetime.timedelta(
-                        hours=int(bell_half_info[:2]),
-                        minutes=int(bell_half_info[3:5])
-                    )
-                    bell_half_end_td = datetime.timedelta(
-                        hours=int(bell_half_info[6:8]),
-                        minutes=int(bell_half_info[9:])
+                bell_end_td = datetime.timedelta(
+                    hours=int(bell_info["2"][6:8]),
+                    minutes=int(bell_info["2"][9:])
+                )
+
+                if current_td < bell_end_td:  # Lessons time.
+                    print(
+                        f"Конец {bell_num} пары через "
+                        f"{bell_end_td - current_td}"
                     )
 
-                    if current_td < bell_half_end_td:  # Lessons time.
-                        print(
-                            f"Конец {bell_num} пары через "
-                            f"{bell_end_td - current_td}"
+                    for bell_half_num, bell_half_info in bell_info.items():
+                        bell_half_start_td = datetime.timedelta(
+                            hours=int(bell_half_info[:2]),
+                            minutes=int(bell_half_info[3:5])
                         )
 
-                        if bell_half_end_td < bell_end_td:
-                            print(
-                                f"Конец {bell_half_num} половины через "
-                                f"{bell_half_end_td - current_td}"
-                            )
-
-                        elif current_td < bell_half_start_td:
+                        if current_td < bell_half_start_td:
                             print(
                                 f"Начало {bell_half_num} половины через "
                                 f"{bell_half_start_td - current_td}"
                             )
+                            return
 
-                        return
+                        bell_half_end_td = datetime.timedelta(
+                            hours=int(bell_half_info[6:8]),
+                            minutes=int(bell_half_info[9:])
+                        )
+
+                        if current_td < bell_half_end_td < bell_end_td:
+                            print(
+                                f"Конец {bell_half_num} половины через "
+                                f"{bell_half_end_td - current_td}"
+                            )
+                            return
+
+                    return
 
         else:  # Saturday.
             for bell_num, bell_info in self._config["bells"]["sat"].items():
                 bell_start_td = datetime.timedelta(
                     hours=int(bell_info[:2]),
                     minutes=int(bell_info[3:5])
-                )
-                bell_end_td = datetime.timedelta(
-                    hours=int(bell_info[6:8]),
-                    minutes=int(bell_info[9:])
                 )
 
                 if current_td < bell_start_td:
@@ -178,7 +178,12 @@ class Executor:
                     )
                     return
 
-                elif current_td < bell_end_td:
+                bell_end_td = datetime.timedelta(
+                    hours=int(bell_info[6:8]),
+                    minutes=int(bell_info[9:])
+                )
+
+                if current_td < bell_end_td:
                     print(
                         f"Конец {bell_num} пары через "
                         f"{bell_end_td - current_td}"
