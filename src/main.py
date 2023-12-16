@@ -19,8 +19,12 @@ def main() -> None:
 
     executor = Executor(config)
 
-    while True:
-        executor.exec(input(">>> "))
+    try:
+        while True:
+            executor.exec(input(">>> "))
+
+    except (KeyboardInterrupt, EOFError):
+        print()
 
 
 if __name__ == "__main__":
