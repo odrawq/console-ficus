@@ -11,13 +11,11 @@ def main() -> None:
     """Launches the application."""
     try:
         with open("../config/config.json", "r", encoding="utf-8") as file:
-            config = load(file)
+            executor = Executor(load(file))
 
     except FileNotFoundError:
         print("Фатальная ошибка: не найден файл конфигурации")
         return
-
-    executor = Executor(config)
 
     try:
         while True:
