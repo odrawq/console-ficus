@@ -8,28 +8,28 @@
 
 ## Установка и запуск
 ### Linux/macOS
-1. Клонировать репозиторий
+1. Клонировать репозиторий:
    
 ```git clone https://github.com/qwardo/console-ficus.git```
 
-2. Перейти в директорию с кодом
+2. Перейти в директорию с кодом:
 
-```cd <путь до репозитория>/src```
+```cd console-ficus/src```
 
-3. Запустить
+3. Запустить главный скрипт:
 
 ```python3 main.py```
 
 ### Windows
-1. [Скачать архив](https://github.com/qwardo/console-ficus/archive/refs/heads/main.zip) с репозиторием
+1. [Скачать архив](https://github.com/qwardo/console-ficus/archive/refs/heads/main.zip) с репозиторием.
 
-2. Разархивировать скачанный архив
+2. Разархивировать скачанный архив в эту же директорию.
    
-3. Перейти в директорию с кодом
+3. Перейти в директорию с кодом:
    
-```cd <путь до репозитория>\src```
+```cd console-ficus-main\src```
 
-4. Запустить
+4. Запустить главный скрипт:
 
 ```python main.py```
 
