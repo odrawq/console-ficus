@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 """
 This is the main module that allows you to launch the application.
 """
