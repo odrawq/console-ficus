@@ -22,7 +22,7 @@
 
 4. Запустить главный скрипт:
 
-```python3 main.py```
+```./main.py``` или ```python3 main.py```
 
 ### Windows
 1. [Скачать архив](https://github.com/qwardo/console-ficus/archive/refs/heads/main.zip).
