@@ -12,18 +12,25 @@ class Executor:
     def __init__(self, config: dict) -> None:
         self._config = config
         self._commands = {
+            "e": self._exit,
             "exit": self._exit,
+            "c": self._clear,
             "clear": self._clear,
+            "h": self._help,
             "help": self._help,
+            "w": self._week,
             "week": self._week,
+            "l": self._lessons,
             "lessons": self._lessons,
+            "b": self._bells,
             "bells": self._bells,
+            "t": self._time,
             "time": self._time
         }
 
         print(
             "Console Ficus\n"
-            "Напишите \"help\" для получения дополнительной информации."
+            "Напишите \"h\" для получения дополнительной информации."
         )
 
     def exec(self, commands: str) -> None:
@@ -55,13 +62,13 @@ class Executor:
         """Prints an application manual."""
         print(
             "&& - логическое \"и\" для объединения команд\n"
-            "exit - выйти\n"
-            "clear - очистить консоль\n"
-            "help - вывести руководство\n"
-            "week - вывести тип текущей недели\n"
-            "lessons - вывести расписание пар\n"
-            "bells - вывести расписание звонков\n"
-            "time - вывести время до начала или конца текущей пары"
+            "e или exit - выйти\n"
+            "c или clear - очистить консоль\n"
+            "h или help - вывести руководство\n"
+            "w или week - вывести тип текущей недели\n"
+            "l или lessons - вывести расписание пар\n"
+            "b или bells - вывести расписание звонков\n"
+            "t или time - вывести время до начала или конца текущей пары"
         )
 
     def _week(self) -> None:
