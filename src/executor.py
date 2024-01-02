@@ -33,6 +33,8 @@ class Executor:
             "Напишите \"h\" для получения дополнительной информации."
         )
 
+        self.exec(self._config["autoexec"])
+
     def exec(self, commands: str) -> None:
         """Executes commands."""
         for command in commands.split("&&"):
