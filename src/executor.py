@@ -49,7 +49,7 @@ class Executor:
                     break
 
     def _exit(self) -> None:
-        """Exits the application."""
+        """Exits the program."""
         raise SystemExit
 
     def _clear(self) -> None:
@@ -61,7 +61,7 @@ class Executor:
             os.system("clear")
 
     def _help(self) -> None:
-        """Prints an application manual."""
+        """Prints the program manual."""
         print(
             '&& - логическое "и" для объединения команд\n'
             "e или exit - выйти\n"

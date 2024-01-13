@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-This is the main module that allows you to launch the application.
+This is the main module that allows you to launch the program.
 """
 
 from json import load
@@ -10,7 +10,7 @@ from executor import Executor
 
 
 def main() -> None:
-    """Launches the application."""
+    """Launches the program."""
     try:
         with open("../config/config.json", "r", encoding="utf-8") as file:
             executor = Executor(load(file))
