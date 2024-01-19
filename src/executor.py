@@ -83,25 +83,41 @@ class Executor:
 
     def _lessons(self) -> None:
         """Prints the lessons schedule."""
-        days = iter(
-            ("Понедельник:", "\nВторник:", "\nСреда:",
-             "\nЧетверг:", "\nПятница:", "\nСуббота:")
-        )
+        current_weekday = datetime.datetime.today().weekday()
+        days = [
+            "Понедельник", "\nВторник", "\nСреда",
+            "\nЧетверг", "\nПятница", "\nСуббота"
+        ]
+
+        if current_weekday < len(days):
+            days[current_weekday] = f"{days[current_weekday]} (сегодня)"
+
+        days = iter(days)
 
         for day_info in self._config["lessons"].values():
-            print(next(days))
+            print(f"{next(days)}:")
 
             for lesson_num, lesson_info in day_info.items():
                 print(f"{lesson_num}: {lesson_info}")
 
     def _bells(self) -> None:
         """Prints the bells schedule."""
-        print("Основное:")
+        current_weekday = datetime.datetime.today().weekday()
+
+        if current_weekday < 5:
+            print("Основное (сегодня):")
+
+        else:
+            print("Основное:")
 
         for bell_num, bell_info in self._config["bells"]["main"].items():
             print(f"{bell_num}: {bell_info['1']} | {bell_info['2']}")
 
-        print("\nСубботнее:")
+        if current_weekday == 5:
+            print("\nСубботнее (сегодня):")
+
+        else:
+            print("\nСубботнее:")
 
         for bell_num, bell_info in self._config["bells"]["sat"].items():
             print(f"{bell_num}: {bell_info}")
