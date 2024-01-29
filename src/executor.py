@@ -85,17 +85,19 @@ class Executor:
         """Prints the lessons schedule."""
         current_weekday = datetime.datetime.today().weekday()
         days = [
-            "Понедельник", "\nВторник", "\nСреда",
-            "\nЧетверг", "\nПятница", "\nСуббота"
+            "Понедельник:", "\nВторник:", "\nСреда:",
+            "\nЧетверг:", "\nПятница:", "\nСуббота:"
         ]
 
         if current_weekday < len(days):
-            days[current_weekday] = f"{days[current_weekday]} (сегодня)"
+            days[current_weekday] = days[current_weekday].replace(
+                                        ":", " (сегодня):"
+                                    )
 
         days = iter(days)
 
         for day_info in self._config["lessons"].values():
-            print(f"{next(days)}:")
+            print(next(days))
 
             for lesson_num, lesson_info in day_info.items():
                 print(f"{lesson_num}: {lesson_info}")
