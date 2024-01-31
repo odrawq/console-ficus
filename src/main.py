@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 """
-This is the main module that allows you to launch the program.
+This is the main module that allows you to start the program.
+The program informs you about your studies by entering commands.
 """
 
 from json import load
@@ -10,7 +11,7 @@ from executor import Executor
 
 
 def main() -> None:
-    """Launches the program."""
+    """Starts the program."""
     try:
         with open("../config/config.json", "r", encoding="utf-8") as file:
             executor = Executor(load(file))
