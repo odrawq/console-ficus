@@ -17,7 +17,17 @@ def main() -> None:
             executor = Executor(load(file))
 
     except FileNotFoundError:
-        print("Фатальная ошибка: не найден файл конфигурации")
+        print(
+            "Фатальная ошибка: "
+            "не найден файл конфигурации"
+        )
+        return
+
+    except PermissionError:
+        print(
+            "Фатальная ошибка: "
+            "отказано в доступе при загрузке файла конфигурации"
+        )
         return
 
     try:
