@@ -113,7 +113,7 @@ class Executor:
             print("Основное:")
 
         for bell_num, bell_info in self._config["bells"]["main"].items():
-            print(f"{bell_num}: {bell_info['1']} | {bell_info['2']}")
+            print(f"{bell_num}: {bell_info['1']}, {bell_info['2']}")
 
         if current_weekday == 5:
             print("\nСубботнее (сегодня):")
