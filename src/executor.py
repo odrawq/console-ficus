@@ -31,8 +31,20 @@ class Executor:
         print(
             "Console Ficus\n"
             'Напишите "h" или "help" для получения дополнительной информации.'
+            "\n         :&@@@@@&#5~        "
+            "\n          ?@@#!:^?G@@P.     "
+            "\n            ?&@#57~!B@@Y    "
+            "\n             .J@@@@@@@@@&##B"
+            "\n     ^JGB#B5G@&G?!~~!@@J~!!!"
+            "\n  .5@@#Y7!?&@&     .?@@P:   "
+            "\n ?@@J.     .@@.  .B@&5Y#@&^ "
+            "\nY@&.       G@#  .@@J    ~@@~"
+            "\n@@?      ~&@G   5@#      Y@&"
+            "\nY@@?~~?G@@#^    G@G      7@@"
+            "\n :5#&&#P!.      ~@@:     &@5"
+            "\n                 ?@@J:.!&@5!"
+            "\n                  .P@@@@#YP"
         )
-
         self.exec(self._config["autoexec"])
 
     def exec(self, commands: str) -> None:
