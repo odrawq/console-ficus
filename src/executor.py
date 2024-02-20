@@ -46,7 +46,7 @@ class Executor:
             "\n                 ?@@J:.!&@5!"
             "\n                  .P@@@@#YP"
         )
-        self.exec(self._config["autoexec"])
+        self.exec(self._config.get("autoexec", ""))
 
     def exec(self, commands: str) -> None:
         """Executes commands."""
