@@ -49,16 +49,17 @@ class Executor:
 
     def exec(self, commands: str) -> None:
         """Executes commands."""
-        for command in commands.split("&&"):
-            command = command.strip()
+        for commands in commands.split(";"):
+            for command in commands.split("&&"):
+                command = command.strip()
 
-            if command:
-                if command in self._commands:
-                    self._commands[command]()
+                if command:
+                    if command in self._commands:
+                        self._commands[command]()
 
-                else:
-                    print(f"{command}: команда не найдена")
-                    break
+                    else:
+                        print(f"{command}: команда не найдена")
+                        break
 
     def _exit(self) -> None:
         """Exits the program."""
@@ -75,14 +76,18 @@ class Executor:
     def _help(self) -> None:
         """Prints the program manual."""
         print(
-            '&& - логическое "и" для объединения команд\n'
-            "e или exit - выйти\n"
-            "c или clear - очистить консоль\n"
-            "h или help - вывести это руководство\n"
-            "w или week - вывести тип текущей недели\n"
-            "l или lessons - вывести расписание пар\n"
-            "b или bells - вывести расписание звонков\n"
-            "t или time - вывести время до начала или конца текущей пары"
+            "Программа информирует об учёбе посредством выполнения команд."
+            "\n\nКоманды:\n"
+            "e, exit - выйти\n"
+            "c, clear - очистить консоль\n"
+            "h, help - вывести это руководство\n"
+            "w, week - вывести тип текущей недели\n"
+            "l, lessons - вывести расписание пар\n"
+            "b, bells - вывести расписание звонков\n"
+            "t, time - вывести время до начала или конца текущей пары"
+            "\n\nОператоры:\n"
+            "; - разделить команды\n"
+            "&& - разделить команды и прекратить выполнение при несуществующей"
         )
 
     def _week(self) -> None:
