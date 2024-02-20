@@ -4,6 +4,7 @@ This module contains a class for executing user commands.
 
 import os
 import datetime
+from traceback import format_exc
 
 
 class Executor:
@@ -55,7 +56,20 @@ class Executor:
 
                 if command:
                     if command in self._commands:
-                        self._commands[command]()
+                        try:
+                            self._commands[command]()
+
+                        except Exception as exception:
+                            if isinstance(exception, SystemExit):
+                                raise SystemExit
+
+                            else:
+                                print(
+                                    f"{command}: произошла ошибка "
+                                    "в процессе выполнения команды:\n"
+                                    f"{format_exc().rstrip()}"
+                                )
+                                break
 
                     else:
                         print(f"{command}: команда не найдена")
@@ -87,7 +101,7 @@ class Executor:
             "t, time - вывести время до начала или конца текущей пары"
             "\n\nОператоры:\n"
             "; - разделить команды\n"
-            "&& - разделить команды и прекратить выполнение при несуществующей"
+            "&& - разделить команды и прекратить выполнение при ошибке"
         )
 
     def _week(self) -> None:
