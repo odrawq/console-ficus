@@ -7,7 +7,22 @@ The program informs you about your studies by entering commands.
 
 from json import load
 
-from executor import Executor
+try:
+    from executor import Executor
+
+except ModuleNotFoundError:
+    print(
+        "Фатальная ошибка: "
+        'не найден модуль "executor.py"'
+    )
+    raise SystemExit
+
+except PermissionError:
+    print(
+        "Фатальная ошибка: "
+        'отказано в доступе при попытке импортировать модуль "executor.py"'
+    )
+    raise SystemExit
 
 
 def main() -> None:
