@@ -59,17 +59,13 @@ class Executor:
                         try:
                             self._commands[command]()
 
-                        except Exception as exception:
-                            if isinstance(exception, SystemExit):
-                                raise SystemExit
-
-                            else:
-                                print(
-                                    f"{command}: произошла ошибка "
-                                    "в процессе выполнения команды:\n"
-                                    f"{format_exc().rstrip()}"
-                                )
-                                break
+                        except Exception:
+                            print(
+                                f"{command}: произошла ошибка "
+                                "в процессе выполнения команды:\n"
+                                f"{format_exc().rstrip()}"
+                            )
+                            break
 
                     else:
                         print(f"{command}: команда не найдена")
