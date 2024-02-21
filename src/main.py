@@ -19,14 +19,14 @@ def main() -> None:
     except FileNotFoundError:
         print(
             "Фатальная ошибка: "
-            "не найден файл конфигурации"
+            'не найден файл "config.json"'
         )
         return
 
     except PermissionError:
         print(
             "Фатальная ошибка: "
-            "отказано в доступе при загрузке файла конфигурации"
+            'отказано в доступе при попытке загрузить файл "config.json"'
         )
         return
 
