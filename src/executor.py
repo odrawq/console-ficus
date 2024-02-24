@@ -1,6 +1,4 @@
-"""
-This module contains a class for executing user commands.
-"""
+"""This module contains a class for executing the user commands."""
 
 import os
 import datetime

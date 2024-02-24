@@ -2,7 +2,7 @@
 
 """
 This is the main module that allows you to start the program.
-The program informs you about your studies by entering commands.
+The program informs you about your studies by executing commands.
 """
 
 import json
