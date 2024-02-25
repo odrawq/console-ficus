@@ -108,24 +108,34 @@ class Executor:
 
     def _lessons(self) -> None:
         """Prints the lessons schedule."""
-        current_weekday = datetime.datetime.today().weekday()
-        days = [
-            "Понедельник:", "\nВторник:", "\nСреда:",
-            "\nЧетверг:", "\nПятница:", "\nСуббота:"
-        ]
+        current_weekday = datetime.datetime.today().strftime("%a").lower()
+        days = {
+            "mon": "Понедельник:",
+            "tue": "\nВторник:",
+            "wed": "\nСреда:",
+            "thu": "\nЧетверг:",
+            "fri": "\nПятница:",
+            "sat": "\nСуббота:"
+        }
 
-        if current_weekday < len(days):
+        if current_weekday in days:
             days[current_weekday] = days[current_weekday].replace(
                                         ":", " (сегодня):"
                                     )
 
-        days = iter(days)
+        for day_name in days:
+            if day_name in self._config["lessons"]:
+                days[day_name] = days[day_name].lstrip()
+                break
 
-        for day_info in self._config["lessons"].values():
-            print(next(days))
+        for day_name in days:
+            if day_name in self._config["lessons"]:
+                print(days[day_name])
 
-            for lesson_num, lesson_info in day_info.items():
-                print(f"{lesson_num}: {lesson_info}")
+                for lesson_num, lesson_info in (
+                    self._config["lessons"][day_name].items()
+                ):
+                    print(f"{lesson_num}: {lesson_info}")
 
     def _bells(self) -> None:
         """Prints the bells schedule."""
