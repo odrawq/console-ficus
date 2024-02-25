@@ -108,7 +108,7 @@ class Executor:
 
     def _lessons(self) -> None:
         """Prints the lessons schedule."""
-        current_weekday = datetime.datetime.today().strftime("%a").lower()
+        current_weekday_name = datetime.datetime.today().strftime("%a").lower()
         days = {
             "mon": "Понедельник:",
             "tue": "\nВторник:",
@@ -118,10 +118,10 @@ class Executor:
             "sat": "\nСуббота:"
         }
 
-        if current_weekday in days:
-            days[current_weekday] = days[current_weekday].replace(
-                                        ":", " (сегодня):"
-                                    )
+        if current_weekday_name in days:
+            days[current_weekday_name] = days[current_weekday_name].replace(
+                                            ":", " (сегодня):"
+                                         )
 
         for day_name in days:
             if day_name in self._config["lessons"]:
@@ -139,9 +139,9 @@ class Executor:
 
     def _bells(self) -> None:
         """Prints the bells schedule."""
-        current_weekday = datetime.datetime.today().weekday()
+        current_weekday_num = datetime.datetime.today().weekday()
 
-        if current_weekday < 5:
+        if current_weekday_num < 5:
             print("Основное (сегодня):")
 
         else:
@@ -150,7 +150,7 @@ class Executor:
         for bell_num, bell_info in self._config["bells"]["main"].items():
             print(f"{bell_num}: {bell_info['1']}, {bell_info['2']}")
 
-        if current_weekday == 5:
+        if current_weekday_num == 5:
             print("\nСубботнее (сегодня):")
 
         else:
@@ -162,9 +162,9 @@ class Executor:
     def _time(self) -> None:
         """Prints the time before the start or end of current lesson."""
         current_datetime = datetime.datetime.today()
-        current_weekday = current_datetime.weekday()
+        current_weekday_num = current_datetime.weekday()
 
-        if current_weekday == 6:  # Sunday.
+        if current_weekday_num == 6:  # Sunday.
             print("Сегодня не учебный день")
             return
 
@@ -175,7 +175,7 @@ class Executor:
             hours=current_time.hour
         )
 
-        if current_weekday < 5:  # Weekdays.
+        if current_weekday_num < 5:  # Weekdays.
             for bell_num, bell_info in self._config["bells"]["main"].items():
                 bell_start_td = datetime.timedelta(
                     hours=int(bell_info["1"][:2]),
@@ -200,28 +200,28 @@ class Executor:
                         f"{bell_end_td - current_td}"
                     )
 
-                    for bell_half_num, bell_half_info in bell_info.items():
-                        bell_half_start_td = datetime.timedelta(
-                            hours=int(bell_half_info[:2]),
-                            minutes=int(bell_half_info[3:5])
+                    for half_num, half_info in bell_info.items():
+                        half_start_td = datetime.timedelta(
+                            hours=int(half_info[:2]),
+                            minutes=int(half_info[3:5])
                         )
 
-                        if current_td < bell_half_start_td:
+                        if current_td < half_start_td:
                             print(
-                                f"Начало {bell_half_num} половины через "
-                                f"{bell_half_start_td - current_td}"
+                                f"Начало {half_num} половины через "
+                                f"{half_start_td - current_td}"
                             )
                             return
 
-                        bell_half_end_td = datetime.timedelta(
-                            hours=int(bell_half_info[6:8]),
-                            minutes=int(bell_half_info[9:])
+                        half_end_td = datetime.timedelta(
+                            hours=int(half_info[6:8]),
+                            minutes=int(half_info[9:])
                         )
 
-                        if current_td < bell_half_end_td < bell_end_td:
+                        if current_td < half_end_td < bell_end_td:
                             print(
-                                f"Конец {bell_half_num} половины через "
-                                f"{bell_half_end_td - current_td}"
+                                f"Конец {half_num} половины через "
+                                f"{half_end_td - current_td}"
                             )
                             return
 
