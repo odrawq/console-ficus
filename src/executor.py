@@ -1,4 +1,4 @@
-"""This module contains a class for executing the user commands."""
+"""This module contains a tool for executing user commands."""
 
 import os
 import datetime
@@ -6,7 +6,7 @@ from traceback import format_exc
 
 
 class Executor:
-    """Executes the user commands."""
+    """Executor for executing user commands."""
 
     def __init__(self, config: dict) -> None:
         self._config = config
