@@ -15,14 +15,14 @@ except ModuleNotFoundError:
         "Фатальная ошибка: "
         'не найден модуль "executor.py"'
     )
-    raise SystemExit
+    raise SystemExit(1)
 
 except PermissionError:
     print(
         "Фатальная ошибка: "
         'отказано в доступе при попытке импортировать модуль "executor.py"'
     )
-    raise SystemExit
+    raise SystemExit(1)
 
 
 def main() -> None:
@@ -36,21 +36,21 @@ def main() -> None:
             "Фатальная ошибка: "
             'не найден файл "config.json"'
         )
-        return
+        raise SystemExit(1)
 
     except PermissionError:
         print(
             "Фатальная ошибка: "
             'отказано в доступе при попытке загрузить файл "config.json"'
         )
-        return
+        raise SystemExit(1)
 
     except (json.decoder.JSONDecodeError, AttributeError):
         print(
             "Фатальная ошибка: "
             'файл "config.json" содержит некорректные данные'
         )
-        return
+        raise SystemExit(1)
 
     try:
         while True:
@@ -58,6 +58,7 @@ def main() -> None:
 
     except (KeyboardInterrupt, EOFError):
         print()
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

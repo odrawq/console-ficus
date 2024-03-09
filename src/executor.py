@@ -71,7 +71,7 @@ class Executor:
 
     def _exit(self) -> None:
         """Exits the program."""
-        raise SystemExit
+        raise SystemExit(0)
 
     def _clear(self) -> None:
         """Clears the console."""
