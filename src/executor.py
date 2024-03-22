@@ -124,12 +124,12 @@ class Executor:
                                     )
 
         for day in days:
-            if day in self._config["lessons"]:
+            if self._config["lessons"].get(day):
                 days[day] = days[day].lstrip()  # Removing "\n" from first day.
                 break
 
         for day in days:
-            if day in self._config["lessons"]:
+            if self._config["lessons"].get(day):
                 print(days[day])
 
                 for lesson_num, lesson_info in (
