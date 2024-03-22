@@ -162,9 +162,12 @@ class Executor:
     def _time(self) -> None:
         """Prints the time before the start or end of current lesson."""
         current_datetime = datetime.datetime.today()
-        current_weekday = current_datetime.weekday()
+        current_weekday = current_datetime.strftime("%a").lower()
 
-        if current_weekday == 6:  # Sunday.
+        if (
+            current_weekday == "sun" or not
+            self._config["lessons"].get(current_weekday)
+        ):  # Sunday or day doesn't exists.
             print("Сегодня не учебный день")
             return
 
@@ -175,82 +178,90 @@ class Executor:
             hours=current_time.hour
         )
 
-        if current_weekday < 5:
+        if current_weekday != "sat":  # Weekdays.
             for bell_num, bell_info in self._config["bells"]["main"].items():
-                bell_start_td = datetime.timedelta(
-                    hours=int(bell_info["1"][:2]),
-                    minutes=int(bell_info["1"][3:5])
-                )
-
-                if current_td < bell_start_td:  # Non lessons time.
-                    print(
-                        f"Начало {bell_num} пары через "
-                        f"{bell_start_td - current_td}"
-                    )
-                    return
-
-                bell_end_td = datetime.timedelta(
-                    hours=int(bell_info["2"][6:8]),
-                    minutes=int(bell_info["2"][9:])
-                )
-
-                if current_td < bell_end_td:  # Lessons time.
-                    print(
-                        f"Конец {bell_num} пары через "
-                        f"{bell_end_td - current_td}"
+                if (
+                    self._config["lessons"][current_weekday].get(bell_num, "-")
+                    != "-"
+                ):
+                    bell_start_td = datetime.timedelta(
+                        hours=int(bell_info["1"][:2]),
+                        minutes=int(bell_info["1"][3:5])
                     )
 
-                    for half_num, half_info in bell_info.items():
-                        half_start_td = datetime.timedelta(
-                            hours=int(half_info[:2]),
-                            minutes=int(half_info[3:5])
+                    if current_td < bell_start_td:  # Non lessons time.
+                        print(
+                            f"Начало {bell_num} пары через "
+                            f"{bell_start_td - current_td}"
+                        )
+                        return
+
+                    bell_end_td = datetime.timedelta(
+                        hours=int(bell_info["2"][6:8]),
+                        minutes=int(bell_info["2"][9:])
+                    )
+
+                    if current_td < bell_end_td:  # Lessons time.
+                        print(
+                            f"Конец {bell_num} пары через "
+                            f"{bell_end_td - current_td}"
                         )
 
-                        if current_td < half_start_td:
-                            print(
-                                f"Начало {half_num} половины через "
-                                f"{half_start_td - current_td}"
+                        for half_num, half_info in bell_info.items():
+                            half_start_td = datetime.timedelta(
+                                hours=int(half_info[:2]),
+                                minutes=int(half_info[3:5])
                             )
-                            return
 
-                        half_end_td = datetime.timedelta(
-                            hours=int(half_info[6:8]),
-                            minutes=int(half_info[9:])
-                        )
+                            if current_td < half_start_td:
+                                print(
+                                    f"Начало {half_num} половины через "
+                                    f"{half_start_td - current_td}"
+                                )
+                                return
 
-                        if current_td < half_end_td < bell_end_td:
-                            print(
-                                f"Конец {half_num} половины через "
-                                f"{half_end_td - current_td}"
+                            half_end_td = datetime.timedelta(
+                                hours=int(half_info[6:8]),
+                                minutes=int(half_info[9:])
                             )
-                            return
 
-                    return
+                            if current_td < half_end_td < bell_end_td:
+                                print(
+                                    f"Конец {half_num} половины через "
+                                    f"{half_end_td - current_td}"
+                                )
+                                return
 
-        else:
+                        return
+
+        else:  # Saturday.
             for bell_num, bell_info in self._config["bells"]["sat"].items():
-                bell_start_td = datetime.timedelta(
-                    hours=int(bell_info[:2]),
-                    minutes=int(bell_info[3:5])
-                )
-
-                if current_td < bell_start_td:
-                    print(
-                        f"Начало {bell_num} пары через "
-                        f"{bell_start_td - current_td}"
+                if (
+                    self._config["lessons"][current_weekday].get(bell_num, "-")
+                    != "-"
+                ):
+                    bell_start_td = datetime.timedelta(
+                        hours=int(bell_info[:2]),
+                        minutes=int(bell_info[3:5])
                     )
-                    return
 
-                bell_end_td = datetime.timedelta(
-                    hours=int(bell_info[6:8]),
-                    minutes=int(bell_info[9:])
-                )
+                    if current_td < bell_start_td:
+                        print(
+                            f"Начало {bell_num} пары через "
+                            f"{bell_start_td - current_td}"
+                        )
+                        return
 
-                if current_td < bell_end_td:
-                    print(
-                        f"Конец {bell_num} пары через "
-                        f"{bell_end_td - current_td}"
+                    bell_end_td = datetime.timedelta(
+                        hours=int(bell_info[6:8]),
+                        minutes=int(bell_info[9:])
                     )
-                    return
+
+                    if current_td < bell_end_td:
+                        print(
+                            f"Конец {bell_num} пары через "
+                            f"{bell_end_td - current_td}"
+                        )
+                        return
 
         print("Пары закончились")
