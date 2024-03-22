@@ -52,10 +52,10 @@ class Executor:
             for command in commands.split("&&"):
                 command = command.strip()
 
-                if command:
-                    if command in self._commands:
+                if command:  # Command is not empty.
+                    if command in self._commands:  # Command exists.
                         try:
-                            self._commands[command]()
+                            self._commands[command]()  # Command execution.
 
                         except Exception:
                             print(
@@ -108,7 +108,7 @@ class Executor:
 
     def _lessons(self) -> None:
         """Prints the lessons schedule."""
-        current_weekday_name = datetime.datetime.today().strftime("%a").lower()
+        current_weekday = datetime.datetime.today().strftime("%a").lower()
         days = {
             "mon": "Понедельник:",
             "tue": "\nВторник:",
@@ -118,30 +118,30 @@ class Executor:
             "sat": "\nСуббота:"
         }
 
-        if current_weekday_name in days:
-            days[current_weekday_name] = days[current_weekday_name].replace(
-                                            ":", " (сегодня):"
-                                         )
+        if current_weekday in days:
+            days[current_weekday] = days[current_weekday].replace(
+                                        ":", " (сегодня):"
+                                    )
 
-        for day_name in days:
-            if day_name in self._config["lessons"]:
-                days[day_name] = days[day_name].lstrip()
+        for day in days:
+            if day in self._config["lessons"]:
+                days[day] = days[day].lstrip()  # Removing "\n" from first day.
                 break
 
-        for day_name in days:
-            if day_name in self._config["lessons"]:
-                print(days[day_name])
+        for day in days:
+            if day in self._config["lessons"]:
+                print(days[day])
 
                 for lesson_num, lesson_info in (
-                    self._config["lessons"][day_name].items()
+                    self._config["lessons"][day].items()
                 ):
                     print(f"{lesson_num}: {lesson_info}")
 
     def _bells(self) -> None:
         """Prints the bells schedule."""
-        current_weekday_num = datetime.datetime.today().weekday()
+        current_weekday = datetime.datetime.today().weekday()
 
-        if current_weekday_num < 5:
+        if current_weekday < 5:  # Weekdays.
             print("Основное (сегодня):")
 
         else:
@@ -150,7 +150,7 @@ class Executor:
         for bell_num, bell_info in self._config["bells"]["main"].items():
             print(f"{bell_num}: {bell_info['1']}, {bell_info['2']}")
 
-        if current_weekday_num == 5:
+        if current_weekday == 5:  # Saturday.
             print("\nСубботнее (сегодня):")
 
         else:
@@ -162,9 +162,9 @@ class Executor:
     def _time(self) -> None:
         """Prints the time before the start or end of current lesson."""
         current_datetime = datetime.datetime.today()
-        current_weekday_num = current_datetime.weekday()
+        current_weekday = current_datetime.weekday()
 
-        if current_weekday_num == 6:  # Sunday.
+        if current_weekday == 6:  # Sunday.
             print("Сегодня не учебный день")
             return
 
@@ -175,7 +175,7 @@ class Executor:
             hours=current_time.hour
         )
 
-        if current_weekday_num < 5:  # Weekdays.
+        if current_weekday < 5:
             for bell_num, bell_info in self._config["bells"]["main"].items():
                 bell_start_td = datetime.timedelta(
                     hours=int(bell_info["1"][:2]),
@@ -227,7 +227,7 @@ class Executor:
 
                     return
 
-        else:  # Saturday.
+        else:
             for bell_num, bell_info in self._config["bells"]["sat"].items():
                 bell_start_td = datetime.timedelta(
                     hours=int(bell_info[:2]),
